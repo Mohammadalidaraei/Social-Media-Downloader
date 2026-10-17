@@ -1,0 +1,39 @@
+# Environment & secrets
+.env
+*.env.local
+
+# Storage (runtime data — not committed)
+storage/downloads/
+storage/cache/
+storage/logs/
+storage/*.db
+storage/*.db-shm
+storage/*.db-wal
+
+# Temp files
+/tmp/mediabot/
+*.part
+*.ytdl
+
+# System files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# Cookies (sensitive)
+config/cookies.txt
+
+# Composer (if added later)
+vendor/
+composer.lock
+
+# Node (admin panel assets if added)
+node_modules/
+scripts/__pycache__
