@@ -905,7 +905,6 @@ mediabot/
 │   ├── logs/                  ← لاگ‌ها
 │   └── mediabot.db            ← پایگاه داده SQLite
 ├── worker/worker.php          ← Worker پس‌زمینه
-├── webhook.php                ← نقطه ورود وبهوک
 ├── .env.example               ← نمونه تنظیمات
 └── .htaccess                  ← امنیت Apache
 ```
