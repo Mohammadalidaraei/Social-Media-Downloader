@@ -1,0 +1,44 @@
+# MediaBot — Apache Security Rules
+
+# Block direct access to sensitive directories
+<FilesMatch "\.(php|db|log|env|json|sh)$">
+  # Allow only webhook.php in root
+</FilesMatch>
+
+# Protect storage directory
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Block access to storage
+  RewriteRule ^storage/ - [F,L]
+
+  # Block access to config
+  RewriteRule ^config/ - [F,L]
+
+  # Block access to src
+  RewriteRule ^src/ - [F,L]
+
+  # Block access to worker
+  RewriteRule ^worker/ - [F,L]
+
+  # Block access to scripts
+  RewriteRule ^scripts/ - [F,L]
+
+  # Block access to lang
+  RewriteRule ^lang/ - [F,L]
+
+  # Only allow webhook.php from POST
+  RewriteCond %{REQUEST_FILENAME} webhook.php
+  RewriteCond %{REQUEST_METHOD} !POST
+  RewriteRule ^ - [F,L]
+</IfModule>
+
+# Security headers
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "DENY"
+  Header always set X-XSS-Protection "1; mode=block"
+</IfModule>
+
+# Disable directory listing
+Options -Indexes
