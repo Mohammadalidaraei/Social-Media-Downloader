@@ -708,13 +708,7 @@ server {
 
     root /var/www/mediabot;
 
-    # فقط webhook.php در دسترس عموم
-    location = /webhook.php {
-        fastcgi_pass unix:/var/run/php/php8.3-fpm.sock;
-        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-        include fastcgi_params;
-        fastcgi_read_timeout 30;
-    }
+    # توجه: ربات با Polling کار می‌کند و دیگر نیازی به webhook نیست.
 
     # پنل ادمین
     location /public/admin/ {
@@ -792,24 +786,15 @@ sudo chmod 600 /var/www/mediabot/.env
 
 ---
 
-## 🔗 تنظیم Webhook <a name="fa-webhook"></a>
+## 🔗 تنظیم Polling <a name="fa-polling"></a>
+
+این ربات به حالت **Polling** تغییر یافته است. برای اجرای آن، نیازی به تنظیم Webhook ندارید. کافیست در ترمینال دستور زیر را وارد کنید:
 
 ```bash
-php scripts/setup.php webhook
+php bot.php
 ```
 
-یا به صورت دستی:
-```bash
-curl "https://api.telegram.org/bot<TOKEN>/setWebhook" \
-  -d "url=https://yourdomain.com/webhook.php" \
-  -d "allowed_updates=[\"message\",\"callback_query\"]" \
-  -d "drop_pending_updates=true"
-```
-
-بررسی وضعیت:
-```bash
-php scripts/setup.php test
-```
+با این کار ربات به طور مداوم آپدیت‌ها را از سرور تلگرام دریافت می‌کند و اسکریپت Worker نیز به صورت خودکار در پس‌زمینه (Background) راه‌اندازی می‌شود.
 
 ---
 
